@@ -5,6 +5,7 @@ import FriendCard from "./components/FriendCard";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import friends from "./friends.json";
+import Nav from './components/Nav';
 
 class App extends Component {
   
@@ -39,6 +40,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Nav></Nav>
         <Wrapper>
           <Title>Friends List</Title>
           {this.state.friends.map(friend => (
@@ -52,6 +54,7 @@ class App extends Component {
               location={friend.location}
             />
             ))}
+           
         </Wrapper>
       </div>
     );
