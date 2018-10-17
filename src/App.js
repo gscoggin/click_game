@@ -42,11 +42,24 @@ class App extends Component {
         currentScore: newScore, 
         correctIncorrect: "You guessed correctly!"
       });
-      if (newScore === 12) {
+    if (newScore >= this.state.topScore) {
+      this.setState({ topScore: newScore });
+    }
+      else if (newScore === 12) {
         this.setState({ correctIncorrect: "You win!" });
       }
       this.shuffleFriend();
     }
+
+    handleReset = () => {
+      this.setState({
+        currentScore: 0,
+        topScore: this.state.topScore, 
+        correctIncorrect: "You guess incorrectly!",
+        clicked: []
+      })
+      this.shuffleFriend();
+    } 
 
   
   render() {
@@ -54,7 +67,7 @@ class App extends Component {
       <div className="App">
         <Nav></Nav>
         <Wrapper>
-          <Title>Friends List</Title>
+          <Title>Click on an image to score points, but don't click on the same image more than once!</Title>
           {this.state.friends.map(friend => (
             <FriendCard
               handleClick={this.handleClick}
@@ -64,6 +77,9 @@ class App extends Component {
               image={friend.image}
               occupation={friend.occupation}
               location={friend.location}
+              handleScore={this.handleScore}
+              handleReset={this.handleReset}
+              shuffleFriend={this.shuffleFriend}
             />
             ))}
            
