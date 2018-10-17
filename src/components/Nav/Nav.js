@@ -2,11 +2,16 @@ import React from "react";
 import "./Nav.css";
 
 const Nav = props => (
-<nav className="nav"> {props.children}
-  <a className="nav-link active" href="#">Active</a>
-  <a className="nav-link" href="#">Link</a>
-  <a className="nav-link" href="#">Link</a>
-  <a className="nav-link disabled" href="#">Disabled</a>
+<nav className="nav row"> {props.children}
+  <div className="col sm-4">
+  <p><h1>Click any image to begin</h1></p>
+  </div>
+  <div className="col sm-4">
+  <p><h1>Clicky Game!</h1></p>
+  </div>
+  <div className="col sm-4">
+  <p><h1>Score: </h1></p>
+  </div>
 </nav>
 );
 export default Nav;
