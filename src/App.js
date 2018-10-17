@@ -10,9 +10,14 @@ import Nav from './components/Nav';
 class App extends Component {
   
   state = {
-    friends
+    friends, 
+    currentScore: 0,
+    topScore: 0,
+    correctIncorrect: "",
+    clicked: [], 
   };
   
+  // Random shuffle to shuffle friend cards after click
   shuffleFriend = array => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -23,6 +28,7 @@ class App extends Component {
     return array;
   };
 
+  // handle the click on the image
   handleClick = id => {
     console.log("The image was clicked");
     
@@ -30,12 +36,18 @@ class App extends Component {
 
     }
 
-  removeFriend = id => {
-    const friends = this.state.friends.filter(friend => friend.id !== id);
-  
-    this.setState({ friends });
+    handleScore = () => {
+      const newScore = this.state.currentSCore + 1;
+      this.setState({
+        currentScore: newScore, 
+        correctIncorrect: "You guessed correctly!"
+      });
+      if (newScore === 12) {
+        this.setState({ correctIncorrect: "You win!" });
+      }
+      this.shuffleFriend();
+    }
 
-  };
   
   render() {
     return (
