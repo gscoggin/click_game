@@ -20,22 +20,26 @@ class App extends Component {
   
   // Random shuffle to shuffle friend cards after click
   shuffleFriend = array => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-    return array;
-  };
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
 
   // handle the click on the image
   handleClick = id => {
     console.log("The image was clicked");
-    
-    this.setState({ friends: this.shuffleFriend(this.state.friends) })
+    if (this.state.clicked.indexOf(id) === -1) {
+      this.handleScore();
+      this.setState({ clicked: this.state.clicked.concat(id) });
+    } else {
+      this.shuffleFriend();
+      }
+    };
+    // this.setState({ friends: this.shuffleFriend(this.state.friends) })
 
-    }
+    // }
 
     handleScore = () => {
       const newScore = this.state.currentSCore + 1;
@@ -66,9 +70,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Nav></Nav>
         <Wrapper>
-          <Title>Click on an image to score points, but don't click on the same image more than once!</Title>
+        <Nav          
+            title="Clicky Game"
+            score={this.state.currentScore}
+            topScore={this.state.topScore}
+            correctIncorrect={this.state.correctIncorrect}
+          />
           {this.state.friends.map(friend => (
             <FriendCard
               handleClick={this.handleClick}
