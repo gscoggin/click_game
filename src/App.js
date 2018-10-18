@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import React, { Component } from "react";
 import FriendCard from "./components/FriendCard";
+import Nav from "./components/Nav";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import friends from "./friends.json";
-import Nav from './components/Nav';
+import "./App.css";
+
 
 class App extends Component {
   
