@@ -8,6 +8,15 @@ import friends from "./friends.json";
 import "./App.css";
 
 
+function shuffleFriend(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]
+  }
+  return array;
+};
+
+
 class App extends Component {
   
   state = {
@@ -18,28 +27,17 @@ class App extends Component {
     clicked: [], 
   };
   
-  // Random shuffle to shuffle friend cards after click
-  shuffleFriend = array => {
-      for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    };
-
   // handle the click on the image
   handleClick = id => {
-    console.log("The image was clicked");
+    console.log(this.state.clicked.indexOf(id));
     if (this.state.clicked.indexOf(id) === -1) {
       this.handleScore();
       this.setState({ clicked: this.state.clicked.concat(id) });
     } else {
-      this.shuffleFriend();
-      }
+      this.handleReset();
+    }
     };
-    // this.setState({ friends: this.shuffleFriend(this.state.friends) })
 
-    // }
 
     handleScore = () => {
       const newScore = this.state.currentSCore + 1;
@@ -53,7 +51,7 @@ class App extends Component {
       else if (newScore === 12) {
         this.setState({ correctIncorrect: "You win!" });
       }
-      this.shuffleFriend();
+      this.handleShuffle();
     }
 
     handleReset = () => {
@@ -63,8 +61,24 @@ class App extends Component {
         correctIncorrect: "You guess incorrectly!",
         clicked: []
       })
-      this.shuffleFriend();
+      this.handleShuffle();
     } 
+
+    handleReset = () => {
+      this.setState({
+        currentScore: 0,
+        topScore: this.state.topScore,
+        correctIncorrect: "You guessed incorrectly!",
+        clicked: []
+      });
+      this.handleShuffle();
+    };
+  
+    handleShuffle = () => {
+      let shuffledFriends = shuffleFriend(friends);
+      this.setState({ friends: shuffledFriends });
+    };
+
 
   
   render() {
