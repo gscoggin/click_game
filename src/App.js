@@ -1,13 +1,13 @@
-
-import React, { Component } from "react";
+import React, {
+  Component
+} from "react";
 import FriendCard from "./components/FriendCard";
 import Nav from "./components/Nav";
 import Wrapper from "./components/Wrapper";
-import Title from "./components/Title";
 import friends from "./friends.json";
 import "./App.css";
 
-
+//shuffle fuction to shuffle friends
 function shuffleFriend(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -16,15 +16,15 @@ function shuffleFriend(array) {
   return array;
 };
 
-
+//main component
 class App extends Component {
-  
+
   state = {
-    friends, 
+    friends,
     currentScore: 0,
     topScore: 0,
     correctIncorrect: "",
-    clicked: [], 
+    clicked: [],
   };
   
   // handle the click on the image
@@ -32,55 +32,55 @@ class App extends Component {
     console.log(this.state.clicked.indexOf(id));
     if (this.state.clicked.indexOf(id) === -1) {
       this.handleScore();
-      this.setState({ clicked: this.state.clicked.concat(id) });
+      this.setState({
+        clicked: this.state.clicked.concat(id)
+      });
     } else {
       this.handleReset();
     }
-    };
+    console.log(this.state.currentScore);
+    console.log(typeof (this.state.currentScore));
+  };
 
-
+  //update the score based
     handleScore = () => {
-      const newScore = this.state.currentSCore + 1;
+      const newScore = this.state.currentScore + 1;
       this.setState({
-        currentScore: newScore, 
+        currentScore: newScore,
         correctIncorrect: "You guessed correctly!"
       });
-    if (newScore >= this.state.topScore) {
-      this.setState({ topScore: newScore });
-    }
-      else if (newScore === 12) {
-        this.setState({ correctIncorrect: "You win!" });
+      if (newScore >= this.state.topScore) {
+        this.setState({
+          topScore: newScore
+        });
+      } else if (newScore === 12) {
+        this.setState({
+          correctIncorrect: "You win!"
+        });
       }
       this.handleShuffle();
     }
 
-    handleReset = () => {
-      this.setState({
-        currentScore: 0,
-        topScore: this.state.topScore, 
-        correctIncorrect: "You guess incorrectly!",
-        clicked: []
-      })
-      this.handleShuffle();
-    } 
-
+    //reset the game
     handleReset = () => {
       this.setState({
         currentScore: 0,
         topScore: this.state.topScore,
-        correctIncorrect: "You guessed incorrectly!",
+        correctIncorrect: "You guess incorrectly!",
         clicked: []
-      });
+      })
       this.handleShuffle();
-    };
+    }
   
+    //shuffle images helper function 
     handleShuffle = () => {
       let shuffledFriends = shuffleFriend(friends);
-      this.setState({ friends: shuffledFriends });
+      this.setState({
+        friends: shuffledFriends
+      });
     };
 
-
-  
+  //main render function
   render() {
     return (
       <div className="App">
